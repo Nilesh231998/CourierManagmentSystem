@@ -1,0 +1,66 @@
+
+		<script>
+		
+			$(document).ready(function()
+			{
+
+				loadcou();
+				
+				function loadcou()
+				{
+							
+					$.post('manage.php',
+						{
+							task:"loadCountry"
+						},
+						function(data)
+						{
+							$("#cou").html(data);
+													
+						}
+					);
+				}
+				
+					function loadstate(couname)
+					{
+						$.post('manage.php',
+							{
+								task:"loadState",
+								cou:couname
+							},
+							function(data)
+							{
+								$("#state").html(data);						
+							}
+						);
+					}
+					function loadcity(statename)
+					{
+						$.post('manage.php',
+							{
+								task:"loadCity",
+								state:statename
+							},
+							function(data)
+							{
+								$("#cmbcity_id").html(data);						
+							}
+						);
+					}
+					$("#cou").focusout(function()
+					{
+						
+						var couname;
+						couname = $("#cou").prop("value");
+						loadstate(couname);
+					});
+					
+					$("#state").focusout(function()
+					{
+						var statename;
+						statename = $("#state").prop("value");
+						loadcity(statename);
+						
+					});
+				});
+		</script>		
